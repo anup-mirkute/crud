@@ -1,21 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import Detail, Address
-from django.contrib.auth.models import User
+from .forms import DetailForm
+from .models import Detail
 
 
 # Create your views here.
 def index(request):
-    details = User.objects.all()
-    userform = Detail
-    addressform = Address
+    details = Detail.objects.all()
+    form = DetailForm
+
     context = {
-        'details': details,
-        'userform':userform,
-        'addressform':addressform,
+        'details' : details,
+        'form' : form,
     }
     return render(request, 'index.html', context)
 
 def addDetails(request):
-    
-    return render(request, 'index.html')
+    if request.POST:
+        name = request.POST['name']
+        email = request.POST['email']
+        address = request.POST['address']
+
+        add_detail = Detail(name=name, email=email, address=address)
+        add_detail.save()
+
+    return redirect('index')

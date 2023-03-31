@@ -17,27 +17,30 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="card card-body">
-					<form method="post">
+					<form method="post" action="{% url 'addDetails' %}">
+						{% csrf_token %} 
 	                    <div class="form-group row">
 	                        <label for="name" class="col-sm-5 col-form-label">Name :</label>
 	                        <div class="col-sm-7">
 	                            <!-- <input type="text" class="form-control" id="name"> -->
-	                            
+	                            {{ form.name }}
 	                        </div>
 	                    </div>
 	                    <div class="form-group row">
 	                        <label for="email" class="col-sm-5 col-form-label">Email Address :</label>
 	                        <div class="col-sm-7">
-	                            <input type="email" class="form-control" id="email">
+	                            <!-- <input type="email" class="form-control" id="email"> -->
+								{{ form.email }}
 	                        </div>
 	                    </div>
 	                    <div class="form-group row">
 	                        <label for="address" class="col-sm-5 col-form-label">Address :</label>
 	                        <div class="col-sm-7">
-	                            <textarea class="form-control" id="address" rows="5"></textarea>
+								{{ form.address }}
+	                            <!-- <textarea class="form-control" id="address" rows="5"></textarea> -->
 	                        </div>
 	                    </div>
-	                    <button type="button" class="btn btn-primary btn-block">Submit</button>
+	                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
                 	</form>
 				</div><!-- card  -->
 			</div><!-- col-md-4  -->
@@ -53,18 +56,20 @@
 						    <th scope="col">Delete</th>
 					    </tr>
 					</thead>
+					{% for detail in details %}
 					<tbody>
 					    <tr>
-					        <th scope="row">1</th>
-					        <td>Mark</td>
-					        <td>Otto</td>
-					        <td>@mdo</td>
+					        <th scope="row">{{ detail.id }}</th>
+					        <td>{{ detail.name }}</td>
+					        <td>{{ detail.email }}</td>
+					        <td>{{ detail.address }}</td>
 					        <td><a href="#">Update</a></td>
 					        <td><a href="#"><span class="material-symbols-outlined">delete</span></a></td>
 					    </tr>
 					</tbody>
+					{% endfor %}
 				</table>
-			</div><!-- col-ms-8  -->
+			</div><!-- col-md-8  -->
 		</div><!-- row  -->
 	</div><!-- container  -->
 {% endblock body %}
