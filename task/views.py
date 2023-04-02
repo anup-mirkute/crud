@@ -25,3 +25,21 @@ def addDetails(request):
         add_detail.save()
 
     return redirect('index')
+
+def update(request, id):
+    if request.POST:
+        name = request.POST['name']
+        email = request.POST['email']
+        address = request.POST['address']
+
+        detail = Detail.objects.get(id=id)
+        detail.name = name
+        detail.email = email
+        detail.address = address
+        detail.save()
+    return redirect('index')
+
+def delete(request, id):
+    detail = Detail.objects.get(id=id)
+    detail.delete()
+    return redirect('index')
